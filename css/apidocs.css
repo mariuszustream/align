@@ -73,6 +73,12 @@ header .container .navbar-header {
 	font-weight: 400;
 }
 
+@media (max-width: 991px) {
+	.bs-docs-sidenav {
+		display: none;
+	}
+}
+
 #content-body .nav > li > a:hover, #content-body .nav > li > a:focus {
 	background: none;
 	text-decoration: underline;
