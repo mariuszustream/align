@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+	<title>Ustream Align OneLogin SAML SSO Documentation</title>
+	<link rel="shortcut icon" href="http://static-cdn1.ustream.tv/images/favicon.ico" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="robots" content="index, follow">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://static-cdn2.ustream.tv/v5/css/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="https://ustvstaticcdn2-a.akamaihd.net/packed/snorky_all.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="http://richardgazdik.github.io/api-docs/css/apidocs.css" type="text/css" media="screen">
+
+	<style type="text/css">
+		article img { 
+			width: 700px;
+			border: 1px solid #dae1e6;
+		}
+	</style>
+</head>
+
+<body id="developers-category-home">
+	<nav class="skin-transparent">
+		<div class="wrapper-960">
+			<div class="nav-toggle">
+				<span class="bar"></span>
+				<span class="bar"></span>
+				<span class="bar"></span>
+			</div>
+			<a class="ustream-logo" href="/"><span>Align</span></a>
+			<ul class="nav">
+				<li><a href="general.html">General SAML SSO</a></li>
+				<li><a href="okta.html">Okta SAML SSO</a></li>
+				<li class="selected"><a href="onelogin.html">OneLogin SAML SSO</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<header class="hero small fill-grad1">
+		<div class="wrapper-960">
+			<h1>OneLogin SAML SSO</h1>
+		</div>
+	</header>
+
+	<main>
+		<div class="wrapper-960 center gutter-20">
+			<div class="row">
+
+				<article class="column column-9">
+					<section>
+						<h2 id="introduction">Introduction</h2>
+
+						<p>This document helps you connecting OneLogin and Ustream Align to have SAML based SSO. It assumes that you already have a OneLogin and Ustream Align account so it doesn't cover the account registrations.</p>
+					</section>
+					<section>
+						<h2 id="onelogin_settings">OneLogin Settings</h2>
+						<ol>
+							<li>Login to your account at <a href="https://www.onelogin.com/">https://www.onelogin.com</a></li>
+							<li>Go to Apps > Add Apps</li>
+							<li>Search for and add the app called Ustream<img class="img-responsive" src="img/onelogin-step-3.png"  alt=""/></li>
+							<li>Add and save the app</li>
+							<li>Go to the <i>Configuration</i> tab in the app settings and set the following credentials:
+								<h5>Ustream Channel Url</h5>
+								<ul>
+									<li>This should be the channel URL where you would like to allow your users to authenticate.</li>
+									<li>The URL is https://align.ustream.tv/channel/<i>[YOUR CHANNEL NUMBER]</i></li>
+								</ul>
+								<img class="img-responsive" src="img/onelogin-step-5.png" alt=""/>
+							</li>
+							<li>Go to the <i>SSO</i> tab to obtain the values to populate into Ustream’s interface. Do not close this window it will be needed later.</li><img class="img-responsive" src="img/onelogin-step-6.png" alt="">
+						</ol>
+
+					</section>
+					<section>
+						<h2 id="ustream_saml_sso_settings">Ustream SAML SSO Settings</h2>
+						
+						<ol>
+							<li>Login to your account at <a href="https://www.ustream.tv/login">https://www.ustream.tv/login</a></li>
+							<li>Go to the Account menu on the Ustream dashboard and choose SSO settings from the menu or follow this link: <a href="https://www.ustream.tv/dashboard/account/sso-settings">https://www.ustream.tv/dashboard/account/sso-settings</a></li>
+							<li>Choose <i>Service Provider Initiated SSO</i> from the two options.</li>
+							<li>Map the values as follows from the OneLogin SSO settings page:
+								<ul>
+									<li>Name in OneLogin = Name in Ustream</li>
+									<li>Issuer URL = Entity ID</li>
+									<li>Certificate = Certificate
+										<ul>
+											<li>To get the Certificate from OneLogin click on Certificate > View Details, copy certificate to get the actual certificate.</li>
+										</ul>
+									</li>
+									<li>SAML 2.0 Endpoint (HTTP) = Login URL</li>
+									<li>SLO Endpoint (HTTP) = Logout URL (this is optional)</li>
+								</ul>
+								<img class="img-responsive" src="img/ustream-sso-settings.png" alt="">
+							</li>
+						</ol>
+
+					</section>
+
+				</article>
+
+				<!-- menu -->
+				<div class="column column-3">
+					<ul class="nav sidenav">
+						<li><a href="#introduction">Introduction</a></li>
+						<li><a href="#onelogin_settings">OneLogin Settings</a></li>
+						<li><a href="#ustream_saml_sso_settings">Ustream SAML SSO Settings</a></li>
+					</ul>
+				</div>
+
+
+			</div>
+		</div>
+	</main>
+	<footer>
+		<div class='wrapper-960'>
+			<ul class="footer-nav clear">
+				<li><a href='#'>Product</a></li>
+				<li><a href='#'>Apps</a></li>
+				<li><a href='#'>About</a></li>
+				<li><a href='#'>Press</a></li>
+				<li><a href='#'>Career</a></li>
+				<li><a href='#'>Change</a></li>
+				<li><a href='#'>Support</a></li>
+				<li><a href='#'>Watch</a></li>
+				<li><a href='#'>Plans and Pricing</a></li>
+			</ul>
+			<ul class='footer-copy clear'>
+				<li><span class='copyright'>© 2015 Ustream, Inc. All rights reserved.</span></li>
+				<li><a href='#'>Copyright Policy</a></li>
+				<li><a href='#'>Privacy Policy</a></li>
+				<li><a href='#'>Terms of Service</a></li>
+			</ul>
+			<ul class='social clear'>
+				<li><a href='http://www.facebook.com/ustream'><i class="glyphicon icon-facebook"></i></a></li>
+				<li><a href='http://twitter.com/ustream'><i class="glyphicon icon-twitter"></i></a></li>
+				<li><a href='https://www.linkedin.com/company/ustream-inc'><i class="glyphicon icon-linkedin"></i></a></li>
+				<li><a href='https://plus.google.com/+UstreamTv2007' rel='publisher'><i class="glyphicon icon-google-plus"></i></a></li>
+			</ul>
+		</div>
+	</footer>
+
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="http://10.220.9.224/js/highlight.pack.js"></script>
+	<script src="http://10.220.9.224/js/apidocs.js"></script>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-1359697-47', 'auto');
+		ga('send', 'pageview');
+
+	</script>
+</body>
+</html>
+

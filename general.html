@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+	<title>Ustream Align SAML SSO General Documentation</title>
+	<link rel="shortcut icon" href="http://static-cdn1.ustream.tv/images/favicon.ico" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="robots" content="index, follow">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://static-cdn2.ustream.tv/v5/css/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="https://ustvstaticcdn2-a.akamaihd.net/packed/snorky_all.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="http://richardgazdik.github.io/api-docs/css/apidocs.css" type="text/css" media="screen">
+
+	<style type="text/css">
+		article img { 
+			width: 700px;
+			border: 1px solid #dae1e6;
+		}
+	</style>
+</head>
+
+<body id="developers-category-home">
+	<nav class="skin-transparent">
+		<div class="wrapper-960">
+			<div class="nav-toggle">
+				<span class="bar"></span>
+				<span class="bar"></span>
+				<span class="bar"></span>
+			</div>
+			<a class="ustream-logo" href="/"><span>Align</span></a>
+			<ul class="nav">
+				<li class="selected"><a href="general.html">General SAML SSO</a></li>
+				<li><a href="okta.html">Okta SAML SSO</a></li>
+				<li><a href="onelogin.html">OneLogin SAML SSO</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<header class="hero small fill-grad1">
+		<div class="wrapper-960">
+			<h1>General SAML SSO</h1>
+		</div>
+	</header>
+
+	<main>
+		<div class="wrapper-960 center gutter-20">
+			<div class="row">
+
+				<article class="column column-9">
+
+					<section>
+						<h2 id="introduction">Introduction</h2>
+						<p>Ustream’s SAML based SSO capability for Ustream Align is based on SAML 2.0 - Security Assertion Markup Language.</p>
+						<p>The basic way that SAML works is in the exchange between an <i>identity provider (IdP)</i> and a <i>service provider (SP)</i>. In this case the service provider is Ustream.</p>
+						<p>An identity provider is a service that a company uses to manage the access of their employees to other third party services. Popular identity providers include OneLogin and Okta. Traditionally, companies used employee directories to manage access to on-premise resources. Two of the most common directories used are LDAP and Microsoft Active Directory. These older systems are not based on the SAML standard, but most of the newer identity providers are.</p>
+						<p>This guide contains information about how to connect a SAML 2.0 compliant identity provider to Ustream’s SAML based SSO functionality.</p>
+					</section>
+
+					<section>
+						<h2 id="identity_provider_settings">Identity Provider Settings</h2>
+						<p>You need to set up Ustream as a service provider within your identity provider. Use the following settings to set up Ustream as a service provider.</p>
+
+						<p>Depending on your identity provider, these fields may be labelled differently, so consult the documentation for your identity provider to understand where to copy each URL.</p>
+
+						<h5>Login URL</h5>
+						<ul>
+							<li>This should be the page URL where you would like to allow your users to authenticate, either the Ustream channel page or the page where you have embedded the Ustream player.</li>
+							<li>The URL is https://align.ustream.tv/channel/<i>[YOUR CHANNEL ID]</i></li>
+						</ul>
+						
+						<h5>SAML Assertion Consumer Service URL (ACS)</h5>
+						<ul>
+							<li><a href="https://align.ustream.tv/saml/acs">https://align.ustream.tv/saml/acs</a></li>
+						</ul>
+						
+						<h5>SAML Audience (this is the Ustream service’s Entity ID)</h5>
+						<ul>
+							<li><a href="https://align.ustream.tv/saml">https://align.ustream.tv/saml</a></li>
+						</ul>
+						
+						<h5>SAML Single Logout URL (SLO)</h5>
+						<ul><li><a href="https://align.ustream.tv/saml/sls">https://align.ustream.tv/saml/sls</a></li>
+						</ul>
+						
+
+
+						<h3 id="saml_user_profile_attributes">SAML User Profile Attributes</h3>
+						<p>Ustream requires the email address is provided.</p>
+						<p>First and Last name are also recommended for easier identification of your users within the Ustream dashboard.</p>
+					</section>
+
+					<section>
+						<h2 id="ustream_saml_sso_settings">Ustream SAML SSO Settings</h2>
+						<p>You can choose between SP initiated SSO or IdP initiated SSO.</p>
+						<p>In IdP initiated SSO the federation process is initiated by the IdP sending an unsolicited SAML Response to the SP. In SP-Init, the SP generates an AuthnRequest that is sent to the IDP as the first step in the Federation process and the IDP then responds with a SAML Response. Consult your IdP to determine the appropriate setting here.</p>
+						<p>To connect your IdP with Ustream, you need to provide your IdP’s credentials under the Account menu on the Ustream Dashboard:</p>
+						<p><a href="https://www.ustream.tv/dashboard/account/sso-settings">https://www.ustream.tv/dashboard/account/sso-settings</a></p>
+						<img class="img-responsive" src="img/sso-settings.png" alt="" />
+						<p>There are 4 fields in the Ustream dashboard SSO Settings you need to populate with the information from your IdP:</p>
+						<ol>
+							<li>Entity ID of your IdP</li>
+							<li>Certificate</li>
+							<li>Login URL</li>
+							<li>Logout URL - optional</li>
+						</ol>
+					</section>
+
+					<section>
+						<h2 id="viewer_registration_flow">Viewer Registration Flow</h2>
+						<h3 id="viewer_starts_on_viewing_page">Viewer starts on viewing page</h3>
+
+						<p>In this scenario, you viewer is not yet authenticated with your identity provider. 
+							You share with your viewers the URL where they will watch the Ustream content.  This can either be your Ustream Align channel page, or the page where you have embedded the Ustream player.  This should be the same URL that you entered in your identity provider’s settings as the Login URL.</p>
+							<p>When your viewers arrive on the page, they will see the prompt to login to their company account.</p>
+							<img class="img-responsive" src="img/lock-page.png" alt=""/>
+							<p>Pressing the Get Access button opens your identity provider’s login page in a popup.</p>
+							<p>If the viewer successfully authenticates at your identity provider, the popup closes and the viewer can access to the content.</p>
+
+							<h3 id="viewer_starts_at_identity_provider_page">Viewer starts at Identity Provider Page</h3>
+
+							<p>In this scenario, the viewer starts on a URL for your identity provider.</p>
+							<p>The viewer clicks on a link to access the Ustream viewing page. Since they were already authenticated at your identity provider, they will have immediate access to the Ustream content when they arrive on the viewing page and will not see the prompt to authenticate.</p>
+
+						</section>
+
+
+					</article>
+
+					<!-- menu -->
+					<div class="column column-3">
+						<ul class="nav sidenav">
+							<li>
+								<a href="#introduction">Introduction</a>
+							</li>
+							<li>
+								<a href="#identity_provider_settings">Identity Provider Settings</a>
+								<ul class="nav">
+									<li><a href="#saml_user_profile_attributes">SAML User Profile Attributes</a></li>
+								</ul>
+							</li>
+							<li><a href="#ustream_saml_sso_settings">Ustream SAML SSO Settings</a></li>
+							<li><a href="#viewer_registration_flow">Viewer Registration Flow</a>
+								<ul class="nav">
+									<li><a href="#viewer_starts_on_viewing_page">Viewer starts on viewing page</a></li>
+									<li><a href="#viewer_starts_at_identity_provider_page">Viewer starts at Identity Provider page</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+
+
+				</div>
+			</div>
+		</main>
+		<footer>
+			<div class='wrapper-960'>
+				<ul class="footer-nav clear">
+					<li><a href='#'>Product</a></li>
+					<li><a href='#'>Apps</a></li>
+					<li><a href='#'>About</a></li>
+					<li><a href='#'>Press</a></li>
+					<li><a href='#'>Career</a></li>
+					<li><a href='#'>Change</a></li>
+					<li><a href='#'>Support</a></li>
+					<li><a href='#'>Watch</a></li>
+					<li><a href='#'>Plans and Pricing</a></li>
+				</ul>
+				<ul class='footer-copy clear'>
+					<li><span class='copyright'>© 2015 Ustream, Inc. All rights reserved.</span></li>
+					<li><a href='#'>Copyright Policy</a></li>
+					<li><a href='#'>Privacy Policy</a></li>
+					<li><a href='#'>Terms of Service</a></li>
+				</ul>
+				<ul class='social clear'>
+					<li><a href='http://www.facebook.com/ustream'><i class="glyphicon icon-facebook"></i></a></li>
+					<li><a href='http://twitter.com/ustream'><i class="glyphicon icon-twitter"></i></a></li>
+					<li><a href='https://www.linkedin.com/company/ustream-inc'><i class="glyphicon icon-linkedin"></i></a></li>
+					<li><a href='https://plus.google.com/+UstreamTv2007' rel='publisher'><i class="glyphicon icon-google-plus"></i></a></li>
+				</ul>
+			</div>
+		</footer>
+
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+		<script src="http://10.220.9.224/js/highlight.pack.js"></script>
+		<script src="http://10.220.9.224/js/apidocs.js"></script>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-1359697-47', 'auto');
+			ga('send', 'pageview');
+
+		</script>
+	</body>
+	</html>
+
